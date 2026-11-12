@@ -1379,9 +1379,9 @@
   }
 
   // Initialize application
-  updateTimerDisplay();
-  syncScenarioViewers(getActivePaper().scenarioId);
-  syncThemeControlsUI();
   bindEvents();
+  updateTimerDisplay();
+  syncScenarioViewers(getActivePaper()?.scenarioId);
+  syncThemeControlsUI();
   renderAll();
 })();
