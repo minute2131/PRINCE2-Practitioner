@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="text-scale" content="scale">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#1d4ed8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161d2e" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PRINCE2 v7">
+  <script>
+    try {
+      document.querySelector('meta[name="color-scheme"]').content =
+        localStorage.getItem("color-scheme") ?? "light dark";
+    } catch (_) {}
+  </script>
+  <title>PRINCE2® v7 Practitioner Exam Practice Hub</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to practice questions</a>
+
+  <div id="live-announcer" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-group">
+        <span class="brand-badge" aria-hidden="true">P2·v7</span>
+        <div>
+          <h1 class="site-title">PRINCE2® v7 Practitioner Exam Practice</h1>
+          <p class="site-subtitle">Official Sample Papers 1 &amp; 2 (NowByou) + Extended Multi-Scenario Question Banks</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="timer-pill" id="timer-widget" aria-label="Exam countdown timer">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M12 9v4l2.5 2.5M9 3h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <span id="timer-display" class="timer-digits">02:30:00</span>
+          <button type="button" id="timer-toggle-btn" class="btn btn-ghost btn-sm" aria-pressed="false">Start</button>
+          <button type="button" id="timer-reset-btn" class="btn btn-ghost btn-sm" aria-label="Reset exam timer">Reset</button>
+        </div>
+
+        <button type="button" id="toggle-split-scenario-btn" class="btn btn-secondary desktop-only" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect>
+            <line x1="12" y1="4" x2="12" y2="20" stroke="currentColor" stroke-width="2"></line>
+          </svg>
+          <span>Split Scenario View</span>
+        </button>
+
+        <button type="button" id="open-scenario-modal-btn" class="btn btn-primary">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z" fill="none" stroke="currentColor" stroke-width="2"></path>
+          </svg>
+          <span>Scenario Booklet</span>
+        </button>
+
+        <button type="button" id="open-settings-btn" class="btn btn-secondary" aria-label="Open study settings and score breakdown">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.08a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.08a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.08a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" fill="none" stroke="currentColor" stroke-width="2"></path>
+          </svg>
+          <span>Analytics &amp; Settings</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="paper-nav" aria-label="Exam papers and scenario banks">
+    <div class="paper-nav-inner">
+      <div class="paper-track-group">
+        <span class="track-label">Part 1 · Official Attached Papers (Scenario 4: NowByou)</span>
+        <div class="paper-tabs" id="official-paper-tabs"></div>
+      </div>
+      <div class="paper-track-group">
+        <span class="track-label" id="extended-track-label">Part 2 · Extended Scenarios (Unlock on Completion or Preview Anytime)</span>
+        <div class="paper-tabs" id="extended-paper-tabs"></div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="workspace-shell" id="workspace-shell">
+    <aside class="study-sidebar" aria-label="Score summary and question navigator">
+      <section class="panel score-panel" aria-labelledby="score-heading">
+        <div class="panel-header-row">
+          <h2 id="score-heading" class="panel-title">Paper Progress</h2>
+          <span id="pass-status-badge" class="status-pill status-neutral">Pass mark: 60%</span>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-box">
+            <span class="kpi-label">Answered</span>
+            <strong class="kpi-value" id="kpi-answered">0 / 70</strong>
+          </div>
+          <div class="kpi-box">
+            <span class="kpi-label">Score</span>
+            <strong class="kpi-value" id="kpi-score">0 (0%)</strong>
+          </div>
+          <div class="kpi-box">
+            <span class="kpi-label">Target to Pass</span>
+            <strong class="kpi-value" id="kpi-target">42 / 70</strong>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <label for="paper-progress-bar" class="progress-label-row">
+            <span>Completion</span>
+            <span id="official-mastery-caption">Official Bank: 0 / 140</span>
+          </label>
+          <progress id="paper-progress-bar" max="70" value="0"></progress>
+        </div>
+
+        <div class="sidebar-btn-row">
+          <button type="button" id="open-reset-dialog-btn" class="btn btn-outline btn-sm">Reset Current Paper</button>
+          <button type="button" id="view-syllabus-breakdown-btn" class="btn btn-ghost btn-sm">Syllabus Breakdown</button>
+        </div>
+      </section>
+
+      <section class="panel nav-grid-panel" aria-labelledby="navigator-heading">
+        <div class="panel-header-row">
+          <h2 id="navigator-heading" class="panel-title">Question Map</h2>
+          <div class="view-mode-switch" role="group" aria-label="Question display mode">
+            <button type="button" id="mode-all-btn" class="btn-seg" aria-pressed="true">All</button>
+            <button type="button" id="mode-single-btn" class="btn-seg" aria-pressed="false">One-by-One</button>
+          </div>
+        </div>
+        <div class="legend-row" aria-hidden="true">
+          <span class="legend-chip"><span class="dot dot-correct">✓</span> Correct</span>
+          <span class="legend-chip"><span class="dot dot-incorrect">✕</span> Incorrect</span>
+          <span class="legend-chip"><span class="dot dot-flagged">★</span> Flagged</span>
+        </div>
+        <div id="question-nav-grid" class="question-nav-grid"></div>
+      </section>
+    </aside>
+
+    <main id="main-content" class="questions-main">
+      <section id="exhaustion-banner" class="exhaustion-banner" hidden aria-labelledby="exhaustion-banner-heading">
+        <div class="exhaustion-banner-text">
+          <h2 id="exhaustion-banner-heading">Official NowByou Papers Completed!</h2>
+          <p id="exhaustion-banner-desc">
+            You have answered all 140 official attached questions. Continue your preparation with the 210 extended Practitioner questions (three full 70-question papers) across Scenario 1 (Data Knowledge), Scenario 2 (Louistown City Council), and Scenario 3 (Findef).
+          </p>
+        </div>
+        <div class="exhaustion-banner-actions" id="exhaustion-banner-actions"></div>
+      </section>
+
+      <section class="paper-intro-card" aria-labelledby="active-paper-title">
+        <div class="paper-intro-top">
+          <div>
+            <p class="paper-eyebrow" id="active-paper-eyebrow">Official Sample Paper · Scenario 4: NowByou</p>
+            <h2 id="active-paper-title" class="paper-heading">Official Sample Paper 1 — Scenario 4: NowByou</h2>
+          </div>
+          <span class="scenario-tag-pill" id="active-scenario-pill">Open-Book: Scenario 4</span>
+        </div>
+        <p id="active-paper-desc" class="paper-desc"></p>
+      </section>
+
+      <search class="filter-toolbar" aria-label="Filter and search exam questions">
+        <form id="filter-form" class="filter-form" action="#" method="GET">
+          <div class="filter-field">
+            <label for="section-filter">Syllabus Section</label>
+            <select id="section-filter" name="section">
+              <option value="ALL">All 10 Sections</option>
+              <option value="PRINCIPLES">Principles</option>
+              <option value="PEOPLE">People</option>
+              <option value="BUSINESS CASE">Business Case</option>
+              <option value="ORGANIZATION">Organization</option>
+              <option value="PLANS">Plans</option>
+              <option value="QUALITY">Quality</option>
+              <option value="RISK">Risk</option>
+              <option value="ISSUES">Issues</option>
+              <option value="PROGRESS">Progress</option>
+              <option value="PROCESSES">Processes</option>
+            </select>
+          </div>
+
+          <div class="filter-field">
+            <label for="status-filter">Answer Status</label>
+            <select id="status-filter" name="status">
+              <option value="ALL">All Questions</option>
+              <option value="UNANSWERED">Unanswered Only</option>
+              <option value="INCORRECT">Incorrect Only (Review)</option>
+              <option value="CORRECT">Correct Only</option>
+              <option value="FLAGGED">Flagged (★)</option>
+            </select>
+          </div>
+
+          <div class="filter-field filter-field-search">
+            <label for="search-input">Keyword Search</label>
+            <input
+              type="search"
+              id="search-input"
+              name="q"
+              placeholder="e.g. exception report, tolerance, CharityM..."
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              enterkeyhint="search"
+            >
+          </div>
+
+          <div class="filter-field filter-field-actions">
+            <button type="button" id="clear-filters-btn" class="btn btn-ghost">Clear Filters</button>
+          </div>
+        </form>
+      </search>
+
+      <div id="filter-summary-bar" class="filter-summary-bar" hidden>
+        <span id="filter-summary-text"></span>
+      </div>
+
+      <div id="questions-container" class="questions-list"></div>
+
+      <nav id="single-mode-pager" class="single-pager" aria-label="Single question navigation" hidden>
+        <button type="button" id="prev-question-btn" class="btn btn-secondary" enterkeyhint="previous">← Previous</button>
+        <span id="single-pager-label" class="pager-position">Question 1 of 70</span>
+        <button type="button" id="next-question-btn" class="btn btn-primary" enterkeyhint="next">Next →</button>
+      </nav>
+    </main>
+
+    <aside id="split-scenario-pane" class="split-scenario-pane" hidden aria-label="Open-book scenario reference">
+      <div class="split-pane-header">
+        <div>
+          <span class="pane-kicker">Open-Book Exam Booklet</span>
+          <h2 id="split-scenario-title" class="pane-title">Scenario 4: NowByou</h2>
+        </div>
+        <button type="button" id="close-split-scenario-btn" class="btn btn-ghost btn-sm" aria-label="Close split scenario pane">✕ Close</button>
+      </div>
+      <div class="scenario-switcher-row">
+        <label for="split-scenario-select">Inspect Scenario:</label>
+        <select id="split-scenario-select" name="split_scenario"></select>
+      </div>
+      <div id="split-scenario-body" class="scenario-content-body"></div>
+    </aside>
+  </div>
+
+  <footer class="site-footer">
+    <p>
+      PRINCE2® Version 7 Practitioner Interactive Study Environment · Tick any option to immediately verify your answer and study the full PRINCE2® manual rationale.
+    </p>
+  </footer>
+
+  <!-- Modal 1: Scenario Booklet Reference Dialog -->
+  <dialog id="scenario-dialog" class="modal-dialog modal-lg" closedby="any" aria-labelledby="scenario-dialog-title">
+    <div class="modal-header">
+      <div>
+        <span class="pane-kicker">Official PRINCE2® v7 Exemplar Scenarios</span>
+        <h2 id="scenario-dialog-title" class="modal-title">Scenario Booklet &amp; Additional Information</h2>
+      </div>
+      <form method="dialog">
+        <button value="close" class="btn btn-ghost btn-sm" autofocus aria-label="Close scenario booklet">✕ Close</button>
+      </form>
+    </div>
+    <div class="modal-toolbar">
+      <label for="modal-scenario-select">Select Scenario Booklet:</label>
+      <select id="modal-scenario-select" name="modal_scenario"></select>
+    </div>
+    <div id="modal-scenario-body" class="modal-body scenario-content-body"></div>
+  </dialog>
+
+  <!-- Modal 2: Analytics & Study Settings Dialog (includes 3-state Color Scheme control) -->
+  <dialog id="settings-dialog" class="modal-dialog modal-md" closedby="any" aria-labelledby="settings-dialog-title">
+    <div class="modal-header">
+      <div>
+        <span class="pane-kicker">Performance &amp; Preferences</span>
+        <h2 id="settings-dialog-title" class="modal-title">Syllabus Analytics &amp; Study Settings</h2>
+      </div>
+      <form method="dialog">
+        <button value="close" class="btn btn-ghost btn-sm" autofocus aria-label="Close analytics and settings">✕ Close</button>
+      </form>
+    </div>
+    <div class="modal-body">
+      <section class="settings-section" aria-labelledby="syllabus-stats-heading">
+        <h3 id="syllabus-stats-heading">Current Paper Accuracy by PRINCE2 Syllabus Area</h3>
+        <p class="settings-hint">Practitioner pass threshold is 60% (42 / 70 marks across all 5 full-length exam papers).</p>
+        <div id="syllabus-breakdown-list" class="syllabus-breakdown-list"></div>
+      </section>
+
+      <section class="settings-section" aria-labelledby="theme-settings-heading">
+        <h3 id="theme-settings-heading">Appearance &amp; Color Scheme</h3>
+        <form id="theme-form" action="#" method="GET">
+          <fieldset class="theme-fieldset">
+            <legend>Choose how the interface adapts to light and dark environments:</legend>
+            <div class="theme-radio-group">
+              <label class="theme-option" for="theme-system">
+                <input type="radio" id="theme-system" name="color_scheme_pref" value="system">
+                <span id="theme-system-label">System (Follow OS setting)</span>
+              </label>
+              <label class="theme-option" for="theme-light">
+                <input type="radio" id="theme-light" name="color_scheme_pref" value="light">
+                <span>Light</span>
+              </label>
+              <label class="theme-option" for="theme-dark">
+                <input type="radio" id="theme-dark" name="color_scheme_pref" value="dark">
+                <span>Dark</span>
+              </label>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+
+      <section class="settings-section" aria-labelledby="mobile-app-heading">
+        <h3 id="mobile-app-heading">Phone &amp; Home Screen App</h3>
+        <p class="settings-hint">
+          Install this practice hub on your phone home screen for a full-screen exam experience: on <strong>iPhone Safari</strong> tap <strong>Share → Add to Home Screen</strong>; on <strong>Android Chrome</strong> tap <strong>⋮ Menu → Add to Home screen / Install app</strong>.
+        </p>
+        <div>
+          <button type="button" id="install-pwa-btn" class="btn btn-primary btn-sm" hidden>Install App on This Device</button>
+        </div>
+      </section>
+
+      <section class="settings-section" aria-labelledby="all-papers-reset-heading">
+        <h3 id="all-papers-reset-heading">Overall Study Progress</h3>
+        <p id="overall-progress-summary" class="settings-hint"></p>
+        <button type="button" id="reset-all-progress-btn" class="btn btn-danger-outline btn-sm">Clear All Saved Progress (All 5 Papers)</button>
+      </section>
+    </div>
+  </dialog>
+
+  <!-- Modal 3: Paper / Bank Completion & Next Scenario Progression Dialog -->
+  <dialog id="milestone-dialog" class="modal-dialog modal-md" closedby="any" aria-labelledby="milestone-dialog-title">
+    <div class="modal-header">
+      <div>
+        <span class="pane-kicker" id="milestone-kicker">Paper Complete</span>
+        <h2 id="milestone-dialog-title" class="modal-title">Exam Practice Milestone Reached!</h2>
+      </div>
+      <form method="dialog">
+        <button value="close" class="btn btn-ghost btn-sm" aria-label="Close milestone dialog">✕ Close</button>
+      </form>
+    </div>
+    <div class="modal-body" id="milestone-dialog-body"></div>
+    <div class="modal-footer" id="milestone-dialog-footer">
+      <form method="dialog">
+        <button value="stay" class="btn btn-secondary" autofocus>Review Answers Here</button>
+      </form>
+      <button type="button" id="milestone-next-paper-btn" class="btn btn-primary">Continue to Next Paper →</button>
+    </div>
+  </dialog>
+
+  <!-- Modal 4: Destructive Reset Confirmation Dialog -->
+  <dialog id="reset-dialog" class="modal-dialog modal-sm" aria-labelledby="reset-dialog-title">
+    <div class="modal-header">
+      <h2 id="reset-dialog-title" class="modal-title">Reset Saved Answers?</h2>
+    </div>
+    <div class="modal-body">
+      <p id="reset-dialog-message">This will clear your selected answers and flags for the current paper so you can practice fresh.</p>
+    </div>
+    <form method="dialog" class="modal-footer">
+      <button value="cancel" class="btn btn-secondary" autofocus>Keep My Answers</button>
+      <button value="confirm" class="btn btn-danger">Reset Answers</button>
+    </form>
+  </dialog>
+
+  <script src="data/scenarios.js?v=2"></script>
+  <script src="data/paper1.js?v=2"></script>
+  <script src="data/paper2.js?v=2"></script>
+  <script src="data/scenario1_questions.js?v=2"></script>
+  <script src="data/scenario2_questions.js?v=2"></script>
+  <script src="data/scenario3_questions.js?v=2"></script>
+  <script src="app.js?v=2"></script>
+</body>
+</html>
